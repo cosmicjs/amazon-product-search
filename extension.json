@@ -1,0 +1,23 @@
+{
+	"title": "Amazon Product Search",
+	"font_awesome_class": "fa-shopping-basket",
+	"image_url": "http://stuffpoint.com/dogs/image/445911-dogs-white-dog.jpg",
+	"objects": [
+		{
+			"title": "Amazon Credentials",
+			"slug": "amazon-credentials",
+			"metafields": [
+				{
+					"title": "Key",
+					"key": "amz-key",
+					"value": ""
+				},
+				{
+					"title": "Secret",
+					"key": "amz-secret",
+					"value": ""
+				}
+			]
+		}
+	]
+}

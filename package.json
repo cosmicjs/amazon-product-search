@@ -1,18 +1,34 @@
 {
-  "name": "cosmic-js-best-amazon-extension",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
-  },
-  "devDependencies": {
-    "codogo-react-scripts": "0.9.14"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+	"name": "cosmic-js-best-amazon-extension",
+	"version": "0.1.0",
+	"private": true,
+	"eslintConfig": {
+		"extends": "codogo"
+	},
+	"dependencies": {
+		"amazon-product-api": "^0.4.3",
+		"codogo-react-widgets": "^3.4.0",
+		"crypto-browserify": "^3.11.0",
+		"qs": "^6.4.0",
+		"ramda": "^0.24.1",
+		"react": "^15.5.4",
+		"react-dom": "^15.5.4",
+		"recompose": "^0.23.5"
+	},
+	"devDependencies": {
+		"codogo-react-scripts": "0.9.14",
+		"prettier": "^1.4.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build && cp extension.json build && zip -r build build",
+		"format": "yarn run prettier && eslint --fix src",
+		"freddie-fix-lint": "yarn run format && for f in $( yarn run lint | grep \"codogo-app-write/src\" ) ; do nvim $f ; done",
+		"lint": "eslint --max-warnings 5 src",
+		"postmerge": "yarn install",
+		"postrewrite": "yarn install",
+		"precommit": "npm run format",
+		"prettier": "prettier --use-tabs --tab-width 4 --trailing-comma all --write \"src/**/*.js\"",
+		"eject": "react-scripts eject"
+	}
 }
