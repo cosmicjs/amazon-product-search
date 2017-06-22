@@ -55,8 +55,8 @@ const SearchResultImg = styled.img`
 	align-self: flex-end;
 `;
 
-const SearchResult = ({ name, image, description, }) =>
-	<SearchResultStyled>
+const SearchResult = ({ i, name, image, description, onSelectResult, }) =>
+	<SearchResultStyled onClick = { () => onSelectResult(i) }>
 		<SearchResultName>{name}</SearchResultName>
 
 		<SearchResultOverlay className = "overlay">
@@ -80,9 +80,14 @@ const SearchResults = styled.div`
 	${R.pipe(R.path(["theme", "functions", "shadow",]), R.apply(R.__, [1,]))}
 `;
 
-export default props =>
+export default ({ searchResults, onSelectResult, }) =>
 	<SearchResults>
-		{props.searchResults.map(props =>
-			<SearchResult key = { props.url } { ...props } />,
+		{searchResults.map((props, i) =>
+			<SearchResult
+				key = { props.url }
+				onSelectResult = { onSelectResult }
+				i = { i }
+				{ ...props }
+			/>,
 		)}
 	</SearchResults>;

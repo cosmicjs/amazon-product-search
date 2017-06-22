@@ -4,6 +4,7 @@ import { Shell, } from "codogo-react-widgets";
 
 import Authorize from "./components/authorize";
 import Search from "./components/search";
+import Added from "./components/added";
 
 injectGlobal`
 	html, body, #root {
@@ -68,7 +69,7 @@ class Root extends React.Component {
 			<RootStyled>
 				{this.state.amzKeys
 					? this.state.amzKeys["amz-key"]
-						? <Search { ...this.props } />
+						? [<Search { ...this.props } />, <Added { ...this.props } />,]
 						: <Authorize { ...this.props } />
 					: <div> LOADING </div>}
 			</RootStyled>

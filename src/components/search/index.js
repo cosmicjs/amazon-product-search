@@ -1,80 +1,8 @@
 import styled from "styled-components";
 import { Input, Dropdown, } from "codogo-react-widgets";
-import { compose, withState, withHandlers, } from "recompose";
 
-import searchAmz from "src/lib/searchFor";
-
-import SearchResults from "./searchResults";
-
-const basicState = (name, def) => withState(name, `__${name}Set`, def);
-
-const withSearchState = basicState("searchFor", "");
-const withSearchIndexState = basicState("searchIndex", "All");
-const withSearchResults = basicState("searchResults", []);
-const withQueryTimeoutState = basicState("queryTimeout", null);
-
-const handlers = withHandlers({
-	onSearchForChange: ({
-		__searchResultsSet,
-		__searchForSet,
-		queryTimeout,
-		searchIndex,
-		__queryTimeoutSet,
-	}) => e => {
-		const searchFor = e.target.value;
-
-		__searchForSet(searchFor);
-
-		if (queryTimeout) {
-			clearTimeout(queryTimeout);
-		}
-
-		__queryTimeoutSet(
-			setTimeout(() => {
-				searchAmz({
-					searchIndex,
-					keywords: searchFor,
-					responseGroup: "Images,Large",
-				})
-					.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
-					.then(
-						R.map(
-							({
-								LargeImage,
-								DetailPageURL,
-								ItemAttributes,
-								EditorialReviews,
-							}) => ({
-								name: R.path([0, "Title", 0,])(ItemAttributes),
-								url: DetailPageURL[0],
-								image: R.path([0, "URL", 0,])(LargeImage),
-								description: R.path([
-									0,
-									"EditorialReview",
-									0,
-									"Content",
-									0,
-								])(EditorialReviews),
-							}),
-						),
-					)
-					.then(R.tap(console.log))
-					.then(__searchResultsSet);
-			}, 300),
-		);
-	},
-
-	onSearchIndexChange: ({ __searchIndexSet, }) => e =>
-		__searchIndexSet(e.target.value),
-});
-
-const enhancers = compose(
-	withSearchState,
-	withSearchIndexState,
-	withSearchResults,
-	withQueryTimeoutState,
-	handlers,
-);
+import enhancers from "./enhancers";
+import SearchResults from "./results";
 
 const validIndices = [
 	"All",
@@ -120,7 +48,7 @@ const validIndices = [
 ];
 
 const SearchStyled = styled.div`
-	flex: 1;
+
 `;
 
 const SearchInputs = styled.div`
@@ -177,7 +105,10 @@ class Search extends React.Component {
 					</Dropdown>
 				</SearchInputs>
 
-				<SearchResults searchResults = { this.props.searchResults } />
+				<SearchResults
+					searchResults = { this.props.searchResults }
+					onSelectResult = { this.props.onSelectResult }
+				/>
 
 			</SearchStyled>
 		);
