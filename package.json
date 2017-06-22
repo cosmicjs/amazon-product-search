@@ -9,14 +9,16 @@
 		"amazon-product-api": "^0.4.3",
 		"codogo-react-widgets": "^3.4.0",
 		"crypto-browserify": "^3.11.0",
+		"lodash.debounce": "^4.0.8",
 		"qs": "^6.4.0",
 		"ramda": "^0.24.1",
 		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
-		"recompose": "^0.23.5"
+		"recompose": "^0.23.5",
+		"xml2js": "^0.4.17"
 	},
 	"devDependencies": {
-		"codogo-react-scripts": "0.9.14",
+		"codogo-react-scripts": "^1.0.7-patch.1",
 		"prettier": "^1.4.4"
 	},
 	"scripts": {

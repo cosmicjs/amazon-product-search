@@ -1,5 +1,6 @@
-var crypto = require("crypto-browserify");
+import crypto from "crypto-browserify";
 import codogoFetch from "./codogoFetch";
+import { parseString, } from "xml2js";
 
 var generateSignature = function(stringToSign, awsSecret) {
 	var hmac = crypto.createHmac("sha256", awsSecret);
@@ -129,8 +130,16 @@ var generateQueryString = function(query, method, credentials) {
 export default opts =>
 	codogoFetch({
 		url: generateQueryString(opts, "ItemSearch", {
-			awsId: "AKIAIFFNBLM3J7CYMGSA",
-			awsSecret: "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",
-			awsTag: "",
+			awsId: "AKIAIERPAK4SNGS4GTRQ",
+			awsSecret: "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",
+			awsTag: "codogo0d-20",
 		}),
-	});
+	}).then(
+		xml =>
+			new Promise((done, fail) =>
+				parseString(xml, (err, res) => {
+					err && fail(err);
+					res && done(res);
+				}),
+			),
+	);
