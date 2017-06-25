@@ -23,7 +23,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build && cp extension.json build && zip -r build build",
+		"build": "react-scripts build && cp extension.json build && rm build/static/js/*.map && zip -r build build",
 		"format": "yarn run prettier && eslint --fix src",
 		"freddie-fix-lint": "yarn run format && for f in $( yarn run lint | grep \"codogo-app-write/src\" ) ; do nvim $f ; done",
 		"lint": "eslint --max-warnings 5 src",
