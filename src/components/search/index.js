@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Input, Dropdown, } from "codogo-react-widgets";
+import { Input, Dropdown } from "codogo-react-widgets";
 
 import enhancers from "./enhancers";
 import SearchResults from "./results";
@@ -48,12 +48,14 @@ const validIndices = [
 ];
 
 const SearchStyled = styled.div`
-
+	padding: 2em;
+	max-width: 700px;
 `;
 
 const SearchInputs = styled.div`
 	flex: 0 0 auto;
 	flex-direction: row;
+	margin: 1em 0;
 `;
 
 const SearchBarContainer = styled.div`
@@ -80,36 +82,36 @@ class Search extends React.Component {
 	render() {
 		return (
 			<SearchStyled>
-				<SearchInputs>
-					<SearchBarContainer>
-						<Input
-							name = "searchFor"
-							label = "Search for stuff"
-							onChange = { this.props.onSearchForChange }
-							value = { this.props.searchFor }
-						/>
-					</SearchBarContainer>
+				<h1>Amazon Product Search</h1>
 
+				<SearchInputs>
 					<Dropdown
-						onChange = { this.props.onSearchIndexChange }
-						value = { this.props.searchIndex }
+						onChange={this.props.onSearchIndexChange}
+						value={this.props.searchIndex}
 					>
 						{validIndices.map(searchIndex =>
 							<Dropdown.Option
-								key = { searchIndex }
-								value = { searchIndex }
+								key={searchIndex}
+								value={searchIndex}
 							>
 								{searchIndex}
 							</Dropdown.Option>,
 						)}
 					</Dropdown>
+
+					<SearchBarContainer>
+						<Input
+							name="searchFor"
+							onChange={this.props.onSearchForChange}
+							value={this.props.searchFor}
+						/>
+					</SearchBarContainer>
 				</SearchInputs>
 
 				<SearchResults
-					searchResults = { this.props.searchResults }
-					onSelectResult = { this.props.onSelectResult }
+					searchResults={this.props.searchResults}
+					onSelectResult={this.props.onSelectResult}
 				/>
-
 			</SearchStyled>
 		);
 	}

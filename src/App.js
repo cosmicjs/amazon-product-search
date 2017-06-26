@@ -1,6 +1,6 @@
 import qs from "qs";
-import styled, { injectGlobal, ThemeProvider, } from "styled-components";
-import { Shell, } from "codogo-react-widgets";
+import styled, { injectGlobal, ThemeProvider } from "styled-components";
+import { Shell } from "codogo-react-widgets";
 
 import Authorize from "./components/authorize";
 import Search from "./components/search";
@@ -58,7 +58,7 @@ class Root extends React.Component {
 		)
 			.then(x => x.json())
 			.then(
-				R.pipe(R.path(["object", "metadata",]), amzKeys =>
+				R.pipe(R.path(["object", "metadata"]), amzKeys =>
 					this.setState(R.over(R.lensProp("amzKeys"), () => amzKeys)),
 				),
 			);
@@ -69,8 +69,8 @@ class Root extends React.Component {
 			<RootStyled>
 				{this.state.amzKeys
 					? this.state.amzKeys["amz-key"]
-						? [<Search { ...this.props } />, <Added { ...this.props } />,]
-						: <Authorize { ...this.props } />
+						? [<Search {...this.props} />, <Added {...this.props} />]
+						: <Authorize {...this.props} />
 					: <div> LOADING </div>}
 			</RootStyled>
 		);
@@ -78,8 +78,8 @@ class Root extends React.Component {
 }
 
 export default () =>
-	<ThemeProvider theme = { Shell.defaultTheme }>
+	<ThemeProvider theme={Shell.defaultTheme}>
 		<RootStyled>
-			<Root { ...qs.parse(window.location.search.slice(1, Infinity)) } />;
+			<Root {...qs.parse(window.location.search.slice(1, Infinity))} />;
 		</RootStyled>
 	</ThemeProvider>;

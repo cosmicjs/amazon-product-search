@@ -1,4 +1,4 @@
-import { compose, withState, withHandlers, } from "recompose";
+import { compose, withState, withHandlers } from "recompose";
 
 import searchAmz from "src/lib/searchFor";
 
@@ -10,7 +10,7 @@ const withSearchResults = basicState("searchResults", []);
 const withQueryTimeoutState = basicState("queryTimeout", null);
 
 const handlers = withHandlers({
-	onSearchIndexChange: ({ __searchIndexSet, }) => e =>
+	onSearchIndexChange: ({ __searchIndexSet }) => e =>
 		__searchIndexSet(e.target.value),
 
 	onSelectResult: ({
@@ -19,7 +19,7 @@ const handlers = withHandlers({
 		bucket_slug,
 		write_key,
 	}) => i => {
-		const { name, image, description, url, } = searchResults[i];
+		const { name, image, description, url } = searchResults[i];
 
 		fetch(
 			`https://api.cosmicjs.com/v1/${bucket_slug}/add-object?write_key=${write_key}`,
@@ -75,7 +75,7 @@ const handlers = withHandlers({
 					keywords: searchFor,
 					responseGroup: "Images,Large",
 				})
-					.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
+					.then(R.path(["ItemSearchResponse", "Items", 0, "Item"]))
 					.then(
 						R.map(
 							({
@@ -84,9 +84,9 @@ const handlers = withHandlers({
 								ItemAttributes,
 								EditorialReviews,
 							}) => ({
-								name: R.path([0, "Title", 0,])(ItemAttributes),
+								name: R.path([0, "Title", 0])(ItemAttributes),
 								url: DetailPageURL[0],
-								image: R.path([0, "URL", 0,])(LargeImage),
+								image: R.path([0, "URL", 0])(LargeImage),
 								description: R.path([
 									0,
 									"EditorialReview",

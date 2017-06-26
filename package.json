@@ -7,9 +7,10 @@
 	},
 	"dependencies": {
 		"amazon-product-api": "^0.4.3",
-		"codogo-react-widgets": "^3.4.0",
+		"codogo-react-widgets": "^4.0.3",
 		"crypto-browserify": "^3.11.0",
 		"lodash.debounce": "^4.0.8",
+		"polished": "^1.2.1",
 		"qs": "^6.4.0",
 		"ramda": "^0.24.1",
 		"react": "^15.5.4",
@@ -19,6 +20,7 @@
 	},
 	"devDependencies": {
 		"codogo-react-scripts": "^1.0.7-patch.1",
+		"eslint-config-codogo": "^1.1.4",
 		"prettier": "^1.4.4"
 	},
 	"scripts": {
@@ -27,9 +29,7 @@
 		"format": "yarn run prettier && eslint --fix src",
 		"freddie-fix-lint": "yarn run format && for f in $( yarn run lint | grep \"codogo-app-write/src\" ) ; do nvim $f ; done",
 		"lint": "eslint --max-warnings 5 src",
-		"postmerge": "yarn install",
 		"postrewrite": "yarn install",
-		"precommit": "npm run format",
 		"prettier": "prettier --use-tabs --tab-width 4 --trailing-comma all --write \"src/**/*.js\"",
 		"eject": "react-scripts eject"
 	}
