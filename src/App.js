@@ -75,7 +75,10 @@ class Root extends React.Component {
 							this.state.fetch
 								.getAmazonItems()
 								.then(x => x.json())
-								.then(console.log),
+								.then(R.propOr([], "objects"))
+								.then(addedItems =>
+									this.setState({ addedItems, }),
+								),
 					),
 				),
 			)
@@ -94,13 +97,26 @@ class Root extends React.Component {
 		});
 	}
 
+	@autobind
+	onAddItem(item) {
+		this.setState(
+			R.evolve({
+				addedItems: R.prepend(item),
+			}),
+		);
+	}
+
 	render() {
 		return (
 			<RootStyled>
 				{this.state.amzKeys
 					? this.state.amzKeys["amz-key"]
 						? [
-							<Search { ...this.props } { ...this.state } />,
+							<Search
+								{ ...this.props }
+								{ ...this.state }
+								onAddItem = { this.onAddItem }
+							/>,
 							<Added { ...this.props } { ...this.state } />,
 						]
 						: <Authorize

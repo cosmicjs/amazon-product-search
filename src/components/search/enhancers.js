@@ -12,11 +12,12 @@ const handlers = withHandlers({
 		__searchIndexSet(e.target.value),
 
 	onSelectResult: ({
+		bucket_slug,
+		fetch,
+		onAddItem,
 		searchResults,
 		__searchResultsSet,
-		bucket_slug,
 		write_key,
-		fetch,
 	}) => i => {
 		const { name, image, description, url, } = searchResults[i];
 
@@ -44,7 +45,8 @@ const handlers = withHandlers({
 					],
 				}),
 			})
-			.then(x => x.json());
+			.then(x => x.json())
+			.then(onAddItem);
 
 		__searchResultsSet([]);
 	},

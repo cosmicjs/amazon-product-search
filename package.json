@@ -7,7 +7,7 @@
 	},
 	"dependencies": {
 		"amazon-product-api": "^0.4.3",
-		"codogo-react-widgets": "^3.4.0",
+		"codogo-react-widgets": "3.4.x",
 		"crypto-browserify": "^3.11.0",
 		"lodash.debounce": "^4.0.8",
 		"qs": "^6.4.0",
