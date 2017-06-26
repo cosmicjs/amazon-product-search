@@ -1,6 +1,6 @@
 import crypto from "crypto-browserify";
 import codogoFetch from "./codogoFetch";
-import { parseString, } from "xml2js";
+import { parseString } from "xml2js";
 
 var generateSignature = function(stringToSign, awsSecret) {
 	var hmac = crypto.createHmac("sha256", awsSecret);

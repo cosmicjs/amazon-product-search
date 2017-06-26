@@ -1,5 +1,5 @@
-import { Input, } from "codogo-react-widgets";
-import { compose, withState, withHandlers, } from "recompose";
+import { Input } from "codogo-react-widgets";
+import { compose, withState, withHandlers } from "recompose";
 
 const withKeyState = withState("amzKey", "__setKey", "");
 
@@ -71,12 +71,12 @@ export default withEnhancers(props =>
 	<div>
 		Plz Authorise Amazon with your afiliate link
 
-		<Input label = "Key" value = { props.amzKey } onChange = { props.onKeyChange } />
+		<Input label="Key" value={props.amzKey} onChange={props.onKeyChange} />
 
 		<Input
-			label = "Secret"
-			value = { props.amzSecret }
-			onChange = { props.onSecretChange }
+			label="Secret"
+			value={props.amzSecret}
+			onChange={props.onSecretChange}
 		/>
 
 		<Input label = "Tag" value = { props.amzTag } onChange = { props.onTagChange } />

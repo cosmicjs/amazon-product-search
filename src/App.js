@@ -1,7 +1,7 @@
 import qs from "qs";
 import autobind from "autobind-decorator";
-import styled, { injectGlobal, ThemeProvider, } from "styled-components";
-import { Shell, } from "codogo-react-widgets";
+import styled, { injectGlobal, ThemeProvider } from "styled-components";
+import { Shell } from "codogo-react-widgets";
 
 import cosmicFetch from "./lib/cosmicFetch";
 import searchFor from "./lib/searchFor";
@@ -131,8 +131,8 @@ class Root extends React.Component {
 }
 
 export default () =>
-	<ThemeProvider theme = { Shell.defaultTheme }>
+	<ThemeProvider theme={Shell.defaultTheme}>
 		<RootStyled>
-			<Root { ...qs.parse(window.location.search.slice(1, Infinity)) } />;
+			<Root {...qs.parse(window.location.search.slice(1, Infinity))} />;
 		</RootStyled>
 	</ThemeProvider>;
