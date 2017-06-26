@@ -6,6 +6,7 @@
 		{
 			"title": "Amazon Credentials",
 			"slug": "amazon-credentials",
+			"type": "amazon-credentials",
 			"metafields": [
 				{
 					"key": "amz-key",
@@ -16,6 +17,12 @@
 				{
 					"key": "amz-secret",
 					"title": "Secret",
+					"type": "text",
+					"value": ""
+				},
+				{
+					"key": "amz-tag",
+					"title": "Tag",
 					"type": "text",
 					"value": ""
 				}

@@ -1,7 +1,5 @@
 import { compose, withState, withHandlers, } from "recompose";
 
-import searchAmz from "src/lib/searchFor";
-
 const basicState = (name, def) => withState(name, `__${name}Set`, def);
 
 const withSearchState = basicState("searchFor", "");
@@ -18,19 +16,19 @@ const handlers = withHandlers({
 		__searchResultsSet,
 		bucket_slug,
 		write_key,
+		fetch,
 	}) => i => {
 		const { name, image, description, url, } = searchResults[i];
 
-		fetch(
-			`https://api.cosmicjs.com/v1/${bucket_slug}/add-object?write_key=${write_key}`,
-			{
+		fetch
+			.postAmazonItem({
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
 				},
 				body: JSON.stringify({
 					title: name,
-					type_slug: "amazon-item",
+					type_slug: "amazon-items",
 					content: description,
 					metafields: [
 						{
@@ -45,10 +43,8 @@ const handlers = withHandlers({
 						},
 					],
 				}),
-			},
-		)
-			.then(x => x.json())
-			.then(console.log);
+			})
+			.then(x => x.json());
 
 		__searchResultsSet([]);
 	},
@@ -59,6 +55,7 @@ const handlers = withHandlers({
 		queryTimeout,
 		searchIndex,
 		__queryTimeoutSet,
+		searchAmz,
 	}) => e => {
 		const searchFor = e.target.value;
 

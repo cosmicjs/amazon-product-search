@@ -127,12 +127,12 @@ var generateQueryString = function(query, method, credentials) {
 	return queryString;
 };
 
-export default opts =>
+export default (awsId, awsSecret, awsTag) => opts =>
 	codogoFetch({
 		url: generateQueryString(opts, "ItemSearch", {
-			awsId: "AKIAIERPAK4SNGS4GTRQ",
-			awsSecret: "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",
-			awsTag: "codogo0d-20",
+			awsId,
+			awsSecret,
+			awsTag,
 		}),
 	}).then(
 		xml =>

@@ -69,14 +69,6 @@ class Search extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		fetch(
-			`https://api.cosmicjs.com/v1/${this.props[
-				"bucket_slug"
-			]}/object-type/amazon-items`,
-		).then(x => x.json());
-	}
-
 	render() {
 		return (
 			<SearchStyled>
