@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import { Input, Dropdown } from "codogo-react-widgets";
+
+import { 
+	Input, 
+	Dropdown,
+} from "codogo-react-widgets";
 
 import enhancers from "./enhancers";
-import SearchResults from "./results";
+import { ProductList } from "../toolbox";
 
 const validIndices = [
 	"All",
@@ -50,16 +54,22 @@ const validIndices = [
 const SearchStyled = styled.div`
 	padding: 2em;
 	max-width: 700px;
+	display: block;
 `;
 
 const SearchInputs = styled.div`
 	flex: 0 0 auto;
 	flex-direction: row;
-	margin: 1em 0;
+	margin-top: 1em;
+	justify-content: center;
 `;
 
 const SearchBarContainer = styled.div`
 	flex: 1;
+`;
+
+const DropdownWrapper = styled.div`
+	margin-right: 1em;
 `;
 
 class Search extends React.Component {
@@ -85,19 +95,21 @@ class Search extends React.Component {
 				<h1>Amazon Product Search</h1>
 
 				<SearchInputs>
-					<Dropdown
-						onChange={this.props.onSearchIndexChange}
-						value={this.props.searchIndex}
-					>
-						{validIndices.map(searchIndex =>
-							<Dropdown.Option
-								key={searchIndex}
-								value={searchIndex}
-							>
-								{searchIndex}
-							</Dropdown.Option>,
-						)}
-					</Dropdown>
+					<DropdownWrapper>
+						<Dropdown
+							onChange={this.props.onSearchIndexChange}
+							value={this.props.searchIndex}
+						>
+							{validIndices.map(searchIndex =>
+								<Dropdown.Option
+									key={searchIndex}
+									value={searchIndex}
+								>
+									{searchIndex}
+								</Dropdown.Option>,
+							)}
+						</Dropdown>
+					</DropdownWrapper>
 
 					<SearchBarContainer>
 						<Input
@@ -108,10 +120,15 @@ class Search extends React.Component {
 					</SearchBarContainer>
 				</SearchInputs>
 
-				<SearchResults
-					searchResults={this.props.searchResults}
-					onSelectResult={this.props.onSelectResult}
-				/>
+				<ProductList
+					itemList={this.props.searchResults}
+					onSelectItem={this.props.onSelectResult}
+				>
+					{this.props.searchResults.length > 0 &&
+						<ProductList.Message>
+							Showing the 10 most relevant results...
+						</ProductList.Message>}
+				</ProductList>
 			</SearchStyled>
 		);
 	}

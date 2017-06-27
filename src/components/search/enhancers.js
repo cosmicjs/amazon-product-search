@@ -47,10 +47,10 @@ const handlers = withHandlers({
 				}),
 			},
 		)
-			.then(x => x.json())
-			.then(console.log);
+		.then(x => x.json())
+		.then(console.log);
 
-		__searchResultsSet([]);
+		//__searchResultsSet([]);
 	},
 
 	onSearchForChange: ({
