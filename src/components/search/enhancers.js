@@ -1,6 +1,4 @@
-import { compose, withState, withHandlers } from "recompose";
-
-import searchAmz from "src/lib/searchFor";
+import { compose, withState, withHandlers, } from "recompose";
 
 const basicState = (name, def) => withState(name, `__${name}Set`, def);
 
@@ -10,27 +8,28 @@ const withSearchResults = basicState("searchResults", []);
 const withQueryTimeoutState = basicState("queryTimeout", null);
 
 const handlers = withHandlers({
-	onSearchIndexChange: ({ __searchIndexSet }) => e =>
+	onSearchIndexChange: ({ __searchIndexSet, }) => e =>
 		__searchIndexSet(e.target.value),
 
 	onSelectResult: ({
+		bucket_slug,
+		fetch,
+		onAddItem,
 		searchResults,
 		__searchResultsSet,
-		bucket_slug,
 		write_key,
 	}) => i => {
-		const { name, image, description, url } = searchResults[i];
+		const { name, image, description, url, } = searchResults[i];
 
-		fetch(
-			`https://api.cosmicjs.com/v1/${bucket_slug}/add-object?write_key=${write_key}`,
-			{
+		fetch
+			.postAmazonItem({
 				method: "POST",
 				headers: {
 					"content-type": "application/json",
 				},
 				body: JSON.stringify({
 					title: name,
-					type_slug: "amazon-item",
+					type_slug: "amazon-items",
 					content: description,
 					metafields: [
 						{
@@ -45,10 +44,9 @@ const handlers = withHandlers({
 						},
 					],
 				}),
-			},
-		)
-		.then(x => x.json())
-		.then(console.log);
+			})
+			.then(x => x.json())
+			.then(onAddItem);
 
 		//__searchResultsSet([]);
 	},
@@ -59,6 +57,7 @@ const handlers = withHandlers({
 		queryTimeout,
 		searchIndex,
 		__queryTimeoutSet,
+		searchAmz,
 	}) => e => {
 		const searchFor = e.target.value;
 
@@ -75,7 +74,7 @@ const handlers = withHandlers({
 					keywords: searchFor,
 					responseGroup: "Images,Large",
 				})
-					.then(R.path(["ItemSearchResponse", "Items", 0, "Item"]))
+					.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
 					.then(
 						R.map(
 							({
@@ -84,9 +83,9 @@ const handlers = withHandlers({
 								ItemAttributes,
 								EditorialReviews,
 							}) => ({
-								name: R.path([0, "Title", 0])(ItemAttributes),
+								name: R.path([0, "Title", 0,])(ItemAttributes),
 								url: DetailPageURL[0],
-								image: R.path([0, "URL", 0])(LargeImage),
+								image: R.path([0, "URL", 0,])(LargeImage),
 								description: R.path([
 									0,
 									"EditorialReview",

@@ -1,6 +1,10 @@
 import qs from "qs";
+import autobind from "autobind-decorator";
 import styled, { injectGlobal, ThemeProvider } from "styled-components";
 import { Shell } from "codogo-react-widgets";
+
+import cosmicFetch from "./lib/cosmicFetch";
+import searchFor from "./lib/searchFor";
 
 import Authorize from "./components/authorize";
 import Search from "./components/search";
@@ -39,6 +43,8 @@ injectGlobal`
 
 const RootStyled = styled.div`
 	flex: 1;
+	max-width: 700px;
+	padding: 2em;
 `;
 
 class Root extends React.Component {
@@ -47,21 +53,59 @@ class Root extends React.Component {
 
 		this.state = {
 			amzKeys: null,
+			fetch: cosmicFetch(this.props),
+			addedItems: [],
 		};
 	}
 
 	componentDidMount() {
-		fetch(
-			`https://api.cosmicjs.com/v1/${this.props[
-				"bucket_slug"
-			]}/object/amazon-credentials`,
-		)
+		this.state.fetch
+			.getAmazonCredentials()
 			.then(x => x.json())
 			.then(
-				R.pipe(R.path(["object", "metadata"]), amzKeys =>
-					this.setState(R.over(R.lensProp("amzKeys"), () => amzKeys)),
+				R.pipe(R.path(["object", "metadata",]), amzKeys =>
+					this.setState(
+						{
+							amzKeys,
+							searchAmz: searchFor(
+								amzKeys["amz-key"],
+								amzKeys["amz-secret"],
+								amzKeys["amz-tag"],
+							),
+						},
+						() =>
+							this.state.fetch
+								.getAmazonItems()
+								.then(x => x.json())
+								.then(R.propOr([], "objects"))
+								.then(addedItems =>
+									this.setState({ addedItems, }),
+								),
+					),
 				),
-			);
+			)
+			.then();
+	}
+
+	@autobind
+	onSetAmzKeys(amzKeys) {
+		this.setState({
+			amzKeys,
+			searchAmz: searchFor(
+				amzKeys["amz-key"],
+				amzKeys["amz-secret"],
+				amzKeys["amz-tag"],
+			),
+		});
+	}
+
+	@autobind
+	onAddItem(item) {
+		this.setState(
+			R.evolve({
+				addedItems: R.prepend(item),
+			}),
+		);
 	}
 
 	render() {
@@ -69,8 +113,19 @@ class Root extends React.Component {
 			<RootStyled>
 				{this.state.amzKeys
 					? this.state.amzKeys["amz-key"]
-						? [<Search {...this.props} />, <Added {...this.props} />]
-						: <Authorize {...this.props} />
+						? [
+							<Search
+								{ ...this.props }
+								{ ...this.state }
+								onAddItem = { this.onAddItem }
+							/>,
+							<Added { ...this.props } { ...this.state } />,
+						]
+						: <Authorize
+							{ ...this.props }
+							{ ...this.state }
+							onSetAmzKeys = { this.onSetAmzKeys }
+						/>
 					: <div> LOADING </div>}
 			</RootStyled>
 		);
@@ -78,8 +133,8 @@ class Root extends React.Component {
 }
 
 export default () =>
-	<ThemeProvider theme={Shell.defaultTheme}>
+	<ThemeProvider theme = { Shell.defaultTheme }>
 		<RootStyled>
-			<Root {...qs.parse(window.location.search.slice(1, Infinity))} />;
+			<Root { ...qs.parse(window.location.search.slice(1, Infinity)) } />;
 		</RootStyled>
 	</ThemeProvider>;

@@ -1,14 +1,18 @@
+import styled from "styled-components";
 import { ProductList } from "../toolbox";
 
-export default () => 
-	/*<ProductList
-		itemList={this.props.itemList}
-		onSelectResult={this.props.onSelectResult}
-	>
-		{this.props.itemList.length > 0 &&
+const AddedWrapper = styled.div`
+	margin-top: 1em;
+`;
+
+export default ({ addedItems, }) =>
+	<AddedWrapper>
+		<ProductList
+			itemList={addedItems}
+			onSelectItem={ null }
+		>
 			<ProductList.Message>
-				Added { itemList.length } to CosmicJS catalog
-			</ProductList.Message>}
-	</ProductList>*/
-	<div>Fool</div>
-;
+				Already added...
+			</ProductList.Message>
+		</ProductList>
+	</AddedWrapper>

@@ -52,8 +52,6 @@ const validIndices = [
 ];
 
 const SearchStyled = styled.div`
-	padding: 2em;
-	max-width: 700px;
 	display: block;
 `;
 
@@ -81,14 +79,6 @@ class Search extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-		fetch(
-			`https://api.cosmicjs.com/v1/${this.props[
-				"bucket_slug"
-			]}/object-type/amazon-items`,
-		).then(x => x.json());
-	}
-
 	render() {
 		return (
 			<SearchStyled>
@@ -113,9 +103,9 @@ class Search extends React.Component {
 
 					<SearchBarContainer>
 						<Input
-							name="searchFor"
-							onChange={this.props.onSearchForChange}
-							value={this.props.searchFor}
+							name = "searchFor"
+							onChange = { this.props.onSearchForChange }
+							value = { this.props.searchFor }
 						/>
 					</SearchBarContainer>
 				</SearchInputs>
