@@ -119,7 +119,10 @@ class Root extends React.Component {
 								{ ...this.state }
 								onAddItem = { this.onAddItem }
 							/>,
-							<Added { ...this.props } { ...this.state } />,
+							<Added
+								{ ...this.props }
+								{ ...this.state }
+							/>,
 						]
 						: <Authorize
 							{ ...this.props }
