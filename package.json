@@ -11,7 +11,7 @@
 		"crypto-browserify": "^3.11.0",
 		"lodash.debounce": "^4.0.8",
 		"polished": "^1.2.1",
-		"qs": "^6.4.0",
+		"qs": "^6.5.0",
 		"ramda": "^0.24.1",
 		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
@@ -21,7 +21,7 @@
 	"devDependencies": {
 		"codogo-react-scripts": "^1.0.7-patch.1",
 		"eslint-config-codogo": "^1.1.4",
-		"prettier": "^1.4.4"
+		"prettier": "^1.5.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",

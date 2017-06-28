@@ -1,7 +1,7 @@
 import qs from "qs";
 import autobind from "autobind-decorator";
-import styled, { injectGlobal, ThemeProvider } from "styled-components";
-import { Shell } from "codogo-react-widgets";
+import styled, { injectGlobal, ThemeProvider, } from "styled-components";
+import { Shell, } from "codogo-react-widgets";
 
 import cosmicFetch from "./lib/cosmicFetch";
 import searchFor from "./lib/searchFor";
@@ -77,7 +77,18 @@ class Root extends React.Component {
 							this.state.fetch
 								.getAmazonItems()
 								.then(x => x.json())
-								.then(R.propOr([], "objects"))
+								.then(
+									R.pipe(
+										R.propOr([], "objects"),
+										R.map(
+											({ title, content, metadata, }) => ({
+												name: title,
+												description: content,
+												image: metadata["image_url"],
+											}),
+										),
+									),
+								)
 								.then(addedItems =>
 									this.setState({ addedItems, }),
 								),
@@ -119,10 +130,7 @@ class Root extends React.Component {
 								{ ...this.state }
 								onAddItem = { this.onAddItem }
 							/>,
-							<Added
-								{ ...this.props }
-								{ ...this.state }
-							/>,
+							<Added { ...this.props } { ...this.state } />,
 						]
 						: <Authorize
 							{ ...this.props }
