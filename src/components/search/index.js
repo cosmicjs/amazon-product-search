@@ -104,6 +104,7 @@ class Search extends React.Component {
 				<ProductList
 					itemList = { this.props.searchResults }
 					onSelectItem = { this.props.onSelectResult }
+					filterBy = { this.props.addedItems }
 				>
 					{this.props.searchResults.length > 0 &&
 						<ProductList.Message>

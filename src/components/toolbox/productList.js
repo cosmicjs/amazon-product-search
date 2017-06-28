@@ -35,21 +35,36 @@ const ProductInfo = styled.div`
 	flex-shrink: 1;
 	max-height: 10em;
 	padding: 0.5em;
+	max-width: 100%;
 `;
 
-const ProductName = styled.h3`margin-bottom: 0.5em;`;
-
-const ProductDescription = styled.div`
-	overflow: hidden;
-	align-self: flex-end;
-	-webkit-line-clamp: 3;
+const ProductName = styled.h3`
 	-webkit-box-orient: vertical;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: ${3 * 1.4 * 16}px;
+	-webkit-line-clamp: 3;
+	align-self: flex-end;
+	display: -webkit-box;
 	font-size: 16px;
 	line-height: 1.4;
+	margin-bottom: 0.5em;
+	max-height: ${ 3 * 1.4 * 16 }px;
+	overflow: hidden;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+`;
+
+const ProductDescription = styled.div`
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	align-self: flex-end;
 	display: -webkit-box;
+	font-size: 16px;
+	line-height: 1.4;
+	max-height: ${ 3 * 1.4 * 16 }px;
+	overflow: hidden;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
 `;
 
 const ProductImgWrapper = styled.div`
@@ -79,20 +94,22 @@ const Product = ({ name, image, description, onSelectItem, }) =>
 
 		<ProductInfo>
 			<ProductName>
-				{name}
+				{ ( name || '' ).replace((/,/g), ',\u200B') }
 			</ProductName>
 
 			<ProductDescription
 				dangerouslySetInnerHTML = { {
-					__html: description,
+					__html: ( description || '' ).replace((/,/g), ',\u200B'),
 				} }
 			/>
 		</ProductInfo>
 
-		{onSelectItem &&
+		{
+			onSelectItem &&
 			<ProductOverlay className = "overlay">
 				Add product to CosmicJS catalog
-			</ProductOverlay>}
+			</ProductOverlay>
+		}
 	</ProductStyled>;
 
 // --------------------------------------------------
@@ -115,27 +132,40 @@ const Message = styled.div`
 
 // --------------------------------------------------
 
-const ProductList = props =>
+const ProductList = props => (
+	console.log(props),
+
 	<ProductListContainer>
-		{props.children}
+		{ props.children }
 
 		{props.itemList.length > 0
-			? props.itemList.map((props, i) => {
+			? props.itemList
+			.filter((itemProps) => R.findIndex(
+				(f) => f.image === itemProps.image,
+				props.filterBy,
+				)
+			)
+			.map((itemProps, i) => {
 				const boundSelectItem = props.onSelectItem
 					? () => props.onSelectItem(i)
 					: null;
 
 				return (
 					<Product
-						key = { i + "-" + props.url }
+						key = { itemProps.url }
 						onSelectItem = { boundSelectItem }
 						i = { i }
-						{ ...props }
+						{ ...itemProps }
 					/>
 				);
 			})
 			: <Message>No items</Message>}
-	</ProductListContainer>;
+	</ProductListContainer>
+	)
+
+ProductList.defaultProps = {
+	filterBy: [],
+};
 
 // --------------------------------------------------
 

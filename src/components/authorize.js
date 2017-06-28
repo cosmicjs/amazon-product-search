@@ -70,13 +70,17 @@ const withEnhancers = compose(
 export default withEnhancers(props =>
 	<div>
 		Please Authorise Amazon with your affiliate link
+		
 		<Input label = "Key" value = { props.amzKey } onChange = { props.onKeyChange } />
+		
 		<Input
 			label = "Secret"
 			value = { props.amzSecret }
 			onChange = { props.onSecretChange }
 		/>
+
 		<Input label = "Tag" value = { props.amzTag } onChange = { props.onTagChange } />
+		
 		<Button onClick = { props.submit }>Save</Button>
 	</div>,
 );

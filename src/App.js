@@ -45,6 +45,7 @@ const RootStyled = styled.div`
 	flex: 1;
 	max-width: 700px;
 	padding: 2em;
+	display: block;
 `;
 
 class Root extends React.Component {
@@ -59,6 +60,25 @@ class Root extends React.Component {
 	}
 
 	componentDidMount() {
+		const afterSetState = () => this.state.fetch
+			.getAmazonItems()
+			.then(x => x.json())
+			.then(
+				R.pipe(
+					R.propOr([], "objects"),
+					R.map(
+						({ title, content, metadata, }) => ({
+							name: title,
+							description: content,
+							image: metadata["image_url"],
+						}),
+					),
+				),
+			)
+			.then(addedItems =>
+				this.setState({ addedItems, }),
+			);
+
 		this.state.fetch
 			.getAmazonCredentials()
 			.then(x => x.json())
@@ -73,25 +93,7 @@ class Root extends React.Component {
 								amzKeys["amz-tag"],
 							),
 						},
-						() =>
-							this.state.fetch
-								.getAmazonItems()
-								.then(x => x.json())
-								.then(
-									R.pipe(
-										R.propOr([], "objects"),
-										R.map(
-											({ title, content, metadata, }) => ({
-												name: title,
-												description: content,
-												image: metadata["image_url"],
-											}),
-										),
-									),
-								)
-								.then(addedItems =>
-									this.setState({ addedItems, }),
-								),
+						afterSetState
 					),
 				),
 			)
@@ -111,10 +113,14 @@ class Root extends React.Component {
 	}
 
 	@autobind
-	onAddItem(item) {
+	onAddItem({ object: { title, content, metadata } }) {
 		this.setState(
 			R.evolve({
-				addedItems: R.prepend(item),
+				addedItems: R.prepend({
+					name: title,
+					description: content,
+					image: metadata["image_url"],
+				}),
 			}),
 		);
 	}
@@ -130,7 +136,10 @@ class Root extends React.Component {
 								{ ...this.state }
 								onAddItem = { this.onAddItem }
 							/>,
-							<Added { ...this.props } { ...this.state } />,
+							<Added
+								{ ...this.props }
+								{ ...this.state }
+							/>,
 						]
 						: <Authorize
 							{ ...this.props }
@@ -146,6 +155,6 @@ class Root extends React.Component {
 export default () =>
 	<ThemeProvider theme = { Shell.defaultTheme }>
 		<RootStyled>
-			<Root { ...qs.parse(window.location.search.slice(1, Infinity)) } />;
+			<Root { ...qs.parse(window.location.search.slice(1, Infinity)) } />
 		</RootStyled>
 	</ThemeProvider>;

@@ -96,7 +96,6 @@ const handlers = withHandlers({
 							}),
 						),
 					)
-					.then(R.tap(console.log))
 					.then(__searchResultsSet);
 			}, 300),
 		);
