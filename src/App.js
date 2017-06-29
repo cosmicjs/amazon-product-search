@@ -42,10 +42,11 @@ injectGlobal`
 `;
 
 const RootStyled = styled.div`
+	display: block;
 	flex: 1;
+	flex-direction: row;
 	max-width: 700px;
 	padding: 2em;
-	display: block;
 `;
 
 class Root extends React.Component {
@@ -60,24 +61,21 @@ class Root extends React.Component {
 	}
 
 	componentDidMount() {
-		const afterSetState = () => this.state.fetch
-			.getAmazonItems()
-			.then(x => x.json())
-			.then(
-				R.pipe(
-					R.propOr([], "objects"),
-					R.map(
-						({ title, content, metadata, }) => ({
+		const afterSetState = () =>
+			this.state.fetch
+				.getAmazonItems()
+				.then(x => x.json())
+				.then(
+					R.pipe(
+						R.propOr([], "objects"),
+						R.map(({ title, content, metadata, }) => ({
 							name: title,
 							description: content,
 							image: metadata["image_url"],
-						}),
+						})),
 					),
-				),
-			)
-			.then(addedItems =>
-				this.setState({ addedItems, }),
-			);
+				)
+				.then(addedItems => this.setState({ addedItems, }));
 
 		this.state.fetch
 			.getAmazonCredentials()
@@ -93,7 +91,7 @@ class Root extends React.Component {
 								amzKeys["amz-tag"],
 							),
 						},
-						afterSetState
+						afterSetState,
 					),
 				),
 			)
@@ -113,7 +111,7 @@ class Root extends React.Component {
 	}
 
 	@autobind
-	onAddItem({ object: { title, content, metadata } }) {
+	onAddItem({ object: { title, content, metadata, }, }) {
 		this.setState(
 			R.evolve({
 				addedItems: R.prepend({
@@ -136,10 +134,7 @@ class Root extends React.Component {
 								{ ...this.state }
 								onAddItem = { this.onAddItem }
 							/>,
-							<Added
-								{ ...this.props }
-								{ ...this.state }
-							/>,
+							<Added { ...this.props } { ...this.state } />,
 						]
 						: <Authorize
 							{ ...this.props }

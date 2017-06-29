@@ -23,5 +23,6 @@ echo "deleting old extension"
 
 curl --progress-bar -X DELETE "https://api.cosmicjs.com/v1/$BUCKET_SLUG/extensions/$PREVIOUS_EXTENSION_ID" -d "$DELETE_BODY" -H "Content-type: application/json" > /dev/null
 
-echo "TODO: upload new version of extension"
+echo "upload new version of extension"
 
+curl --progress-bar --url "https://api.cosmicjs.com/v1/$BUCKET_SLUG/extensions" --header "content-type: multipart/form-data" --form "write_key=$WRITE_KEY" --form "zip=@./build.zip" > /dev/null

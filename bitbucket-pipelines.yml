@@ -8,4 +8,4 @@ pipelines:
           - yarn install 
           - yarn run lint
           - yarn run build
-          - aws s3 sync --delete build s3://codogo-app-write-prod
+          - ./uploadNewExtension.sh

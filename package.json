@@ -7,7 +7,7 @@
 	},
 	"dependencies": {
 		"amazon-product-api": "^0.4.3",
-		"codogo-react-widgets": "^4.0.5",
+		"codogo-react-widgets": "^4.0.7",
 		"crypto-browserify": "^3.11.0",
 		"lodash.debounce": "^4.0.8",
 		"polished": "^1.2.1",
@@ -19,7 +19,7 @@
 		"xml2js": "^0.4.17"
 	},
 	"devDependencies": {
-		"codogo-react-scripts": "^1.0.7-patch.1",
+		"codogo-react-scripts": "^1.0.8-patch.1",
 		"eslint-config-codogo": "^1.1.4",
 		"prettier": "^1.5.2"
 	},

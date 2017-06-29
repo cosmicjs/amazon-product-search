@@ -46,7 +46,7 @@ const ProductName = styled.h3`
 	font-size: 16px;
 	line-height: 1.4;
 	margin-bottom: 0.5em;
-	max-height: ${ 3 * 1.4 * 16 }px;
+	max-height: ${3 * 1.4 * 16}px;
 	overflow: hidden;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -60,7 +60,7 @@ const ProductDescription = styled.div`
 	display: -webkit-box;
 	font-size: 16px;
 	line-height: 1.4;
-	max-height: ${ 3 * 1.4 * 16 }px;
+	max-height: ${3 * 1.4 * 16}px;
 	overflow: hidden;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -94,22 +94,20 @@ const Product = ({ name, image, description, onSelectItem, }) =>
 
 		<ProductInfo>
 			<ProductName>
-				{ ( name || '' ).replace((/,/g), ',\u200B') }
+				{(name || "").replace(/,/g, ",\u200B")}
 			</ProductName>
 
 			<ProductDescription
 				dangerouslySetInnerHTML = { {
-					__html: ( description || '' ).replace((/,/g), ',\u200B'),
+					__html: (description || "").replace(/,/g, ",\u200B"),
 				} }
 			/>
 		</ProductInfo>
 
-		{
-			onSelectItem &&
+		{onSelectItem &&
 			<ProductOverlay className = "overlay">
 				Add product to CosmicJS catalog
-			</ProductOverlay>
-		}
+			</ProductOverlay>}
 	</ProductStyled>;
 
 // --------------------------------------------------
@@ -132,36 +130,34 @@ const Message = styled.div`
 
 // --------------------------------------------------
 
-const ProductList = props => (
-	console.log(props),
-
+const ProductList = props =>
 	<ProductListContainer>
-		{ props.children }
+		{props.children}
 
 		{props.itemList.length > 0
 			? props.itemList
-			.filter((itemProps) => R.findIndex(
-				(f) => f.image === itemProps.image,
-				props.filterBy,
+				.filter(itemProps =>
+					R.findIndex(
+						f => f.image === itemProps.image,
+						props.filterBy,
+					),
 				)
-			)
-			.map((itemProps, i) => {
-				const boundSelectItem = props.onSelectItem
-					? () => props.onSelectItem(i)
-					: null;
+				.map((itemProps, i) => {
+					const boundSelectItem = props.onSelectItem
+						? () => props.onSelectItem(i)
+						: null;
 
-				return (
-					<Product
-						key = { itemProps.url }
-						onSelectItem = { boundSelectItem }
-						i = { i }
-						{ ...itemProps }
-					/>
-				);
-			})
+					return (
+						<Product
+							key = { itemProps.url }
+							onSelectItem = { boundSelectItem }
+							i = { i }
+							{ ...itemProps }
+						/>
+					);
+				})
 			: <Message>No items</Message>}
-	</ProductListContainer>
-	)
+	</ProductListContainer>;
 
 ProductList.defaultProps = {
 	filterBy: [],
