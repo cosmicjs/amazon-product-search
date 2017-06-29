@@ -20,6 +20,7 @@
 	},
 	"devDependencies": {
 		"codogo-react-scripts": "^1.0.8-patch.1",
+		"eslint": "^4.1.1",
 		"eslint-config-codogo": "^1.1.4",
 		"prettier": "^1.5.2"
 	},
