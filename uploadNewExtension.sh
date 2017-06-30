@@ -1,8 +1,9 @@
 #!/bin/bash
 
-BUCKET_SLUG="${BUCKET_SLUG:-extensions-2}"
-READ_KEY="${READ_KEY:-foo}"
-WRITE_KEY="${WRITE_KEY:-bar}"
+#you can define these variables yourself to test this script
+#BUCKET_SLUG=""
+#READ_KEY=""
+#WRITE_KEY=""
 
 EXTENSION_NAME="${EXTENSION_NAME:-Amazon Product Search}"
 

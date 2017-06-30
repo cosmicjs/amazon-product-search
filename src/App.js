@@ -152,4 +152,6 @@ export default () =>
 		<RootStyled>
 			<Root { ...qs.parse(window.location.search.slice(1, Infinity)) } />
 		</RootStyled>
-	</ThemeProvider>;
+   </ThemeProvider>;
+
+
