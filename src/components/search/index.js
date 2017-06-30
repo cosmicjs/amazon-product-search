@@ -106,10 +106,14 @@ class Search extends React.Component {
 					onSelectItem = { this.props.onSelectResult }
 					filterBy = { this.props.addedItems }
 				>
-					{this.props.searchResults.length > 0 &&
-						<ProductList.Message>
-							Showing the 10 most relevant results...
-						</ProductList.Message>}
+					{this.props.searchResults.length > 0
+							? <ProductList.Message>
+								Showing the 10 most relevant results...
+							</ProductList.Message>
+							: <ProductList.Message>
+								Loading...
+							</ProductList.Message>
+					}
 				</ProductList>
 			</SearchStyled>
 		);

@@ -346,7 +346,7 @@ attr-accept@^1.0.3:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.0.tgz#b5cd35227f163935a8f1de10ed3eba16941f6be6"
 
-autobind-decorator@^1.4.1:
+autobind-decorator@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-1.4.3.tgz#4c96ffa77b10622ede24f110f5dbbf56691417d1"
 
@@ -1651,11 +1651,11 @@ codogo-react-scripts@^1.0.8-patch.1:
   optionalDependencies:
     fsevents "1.1.2"
 
-codogo-react-widgets@^4.0.7:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/codogo-react-widgets/-/codogo-react-widgets-4.0.7.tgz#686149160e034eca72c47be4e304678456aca960"
+codogo-react-widgets@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/codogo-react-widgets/-/codogo-react-widgets-4.0.8.tgz#59a5452eb1637a36fc6dcd92d05ac7e9e03cbeb8"
   dependencies:
-    autobind-decorator "^1.4.1"
+    autobind-decorator "^1.4.3"
     babel-plugin-inline-react-svg "^0.4.0"
     chokidar "^1.6.0"
     classnames "^2.2.5"
@@ -1664,14 +1664,14 @@ codogo-react-widgets@^4.0.7:
     feather-icons "^2.4.0"
     jwt-decode "^2.2.0"
     moment "^2.18.1"
-    polished "^1.1.3"
+    polished "^1.2.1"
     prop-types "^15.5.10"
     ramda "^0.24.1"
     react "^15.6.1"
     react-addons-pure-render-mixin "^15.6.0"
     react-apollo "^1.4.2"
     react-dom "^15.6.1"
-    react-dropzone "^3.13.2"
+    react-dropzone "^3.13.3"
     react-imageloader "^2.1.0"
     react-native-listener "^1.0.1"
     react-onclickoutside "^6.1.1"
@@ -4950,7 +4950,7 @@ pluralize@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-4.0.0.tgz#59b708c1c0190a2f692f1c7618c446b052fd1762"
 
-polished@^1.1.3, polished@^1.2.1:
+polished@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/polished/-/polished-1.2.1.tgz#83c18a85bf9d7023477cfc7049763b657d50f0f7"
 
@@ -5468,7 +5468,7 @@ react-dev-utils@^3.0.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-dropzone@^3.13.2:
+react-dropzone@^3.13.3:
   version "3.13.3"
   resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-3.13.3.tgz#b8bde4b5a12842f85196b45e8cc2959834b81962"
   dependencies:

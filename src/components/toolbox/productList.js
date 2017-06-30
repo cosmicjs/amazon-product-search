@@ -149,7 +149,7 @@ const ProductList = props =>
 
 					return (
 						<Product
-							key = { itemProps.url }
+							key = { `${itemProps.url} ${i}` }
 							onSelectItem = { boundSelectItem }
 							i = { i }
 							{ ...itemProps }

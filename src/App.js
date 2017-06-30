@@ -24,6 +24,7 @@ injectGlobal`
 	body {
 		font-family: Helvetica Neue,Segoe UI,Helvetica,Arial,sans-serif;
 		color: ${Shell.defaultTheme.colors.black};
+		background-color: ${Shell.defaultTheme.colors.white};
 	}
 
 	div {
@@ -42,9 +43,7 @@ injectGlobal`
 `;
 
 const RootStyled = styled.div`
-	display: block;
 	flex: 1;
-	flex-direction: row;
 	max-width: 700px;
 	padding: 2em;
 `;

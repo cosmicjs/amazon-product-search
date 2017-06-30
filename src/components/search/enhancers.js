@@ -8,10 +8,50 @@ const withSearchResults = basicState("searchResults", []);
 const withQueryTimeoutState = basicState("queryTimeout", null);
 const withLoadingState = basicState("loading", false);
 
+const withPerformSearch = withHandlers({
+	performSearch: ({
+		searchAmz,
+		searchFor,
+		searchIndex,
+		__searchResultsSet,
+		__loadingSet,
+	}) => () =>
+	searchAmz({
+		searchIndex,
+		keywords: searchFor,
+		responseGroup: "Images,Large",
+	})
+	.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
+	.then(
+		R.map(
+			({
+				LargeImage,
+				DetailPageURL,
+				ItemAttributes,
+				EditorialReviews,
+			}) => ({
+				name: R.path([0, "Title", 0,])(ItemAttributes),
+				url: DetailPageURL[0],
+				image: R.path([0, "URL", 0,])(LargeImage),
+				description: R.path([
+					0,
+					"EditorialReview",
+					0,
+					"Content",
+					0,
+				])(EditorialReviews),
+			}),
+		),
+	)
+	.then(__searchResultsSet)
+	.then(() => __loadingSet(false)),
+});
+
 const handlers = withHandlers({
 	onSearchIndexChange: ({
 		__searchIndexSet,
 		__queryTimeoutSet,
+		__searchResultsSet,
 		queryTimeout,
 		performSearch,
 		__loadingSet,
@@ -23,7 +63,7 @@ const handlers = withHandlers({
 		}
 
 		__queryTimeoutSet(setTimeout(performSearch, 300));
-
+		__searchResultsSet([]);
 		__loadingSet(true);
 	},
 
@@ -63,46 +103,7 @@ const handlers = withHandlers({
 			})
 			.then(x => x.json())
 			.then(onAddItem);
-
-		//__searchResultsSet([]);
 	},
-
-	performSearch: ({
-		searchAmz,
-		searchFor,
-		searchIndex,
-		__searchResultsSet,
-		__loadingSet,
-	}) => () =>
-		searchAmz({
-			searchIndex,
-			keywords: searchFor,
-			responseGroup: "Images,Large",
-		})
-			.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
-			.then(
-				R.map(
-					({
-						LargeImage,
-						DetailPageURL,
-						ItemAttributes,
-						EditorialReviews,
-					}) => ({
-						name: R.path([0, "Title", 0,])(ItemAttributes),
-						url: DetailPageURL[0],
-						image: R.path([0, "URL", 0,])(LargeImage),
-						description: R.path([
-							0,
-							"EditorialReview",
-							0,
-							"Content",
-							0,
-						])(EditorialReviews),
-					}),
-				),
-			)
-			.then(__searchResultsSet)
-			.then(() => __loadingSet(false)),
 
 	onSearchForChange: ({
 		__searchResultsSet,
@@ -120,7 +121,10 @@ const handlers = withHandlers({
 			clearTimeout(queryTimeout);
 		}
 
+		console.log({ performSearch,});
+
 		__queryTimeoutSet(setTimeout(performSearch, 300));
+		__searchResultsSet([]);
 		__loadingSet(true);
 	},
 });
@@ -131,5 +135,6 @@ export default compose(
 	withSearchResults,
 	withQueryTimeoutState,
 	withLoadingState,
+	withPerformSearch,
 	handlers,
 );
