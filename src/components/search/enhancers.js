@@ -6,10 +6,26 @@ const withSearchState = basicState("searchFor", "");
 const withSearchIndexState = basicState("searchIndex", "All");
 const withSearchResults = basicState("searchResults", []);
 const withQueryTimeoutState = basicState("queryTimeout", null);
+const withLoadingState = basicState("loading", false);
 
 const handlers = withHandlers({
-	onSearchIndexChange: ({ __searchIndexSet, }) => e =>
-		__searchIndexSet(e.target.value),
+	onSearchIndexChange: ({
+		__searchIndexSet,
+		__queryTimeoutSet,
+		queryTimeout,
+		performSearch,
+		__loadingSet,
+	}) => e => {
+		__searchIndexSet(e.target.value);
+
+		if (queryTimeout) {
+			clearTimeout(queryTimeout);
+		}
+
+		__queryTimeoutSet(setTimeout(performSearch, 300));
+
+		__loadingSet(true);
+	},
 
 	onSelectResult: ({
 		bucket_slug,
@@ -51,13 +67,50 @@ const handlers = withHandlers({
 		//__searchResultsSet([]);
 	},
 
+	performSearch: ({
+		searchAmz,
+		searchFor,
+		searchIndex,
+		__searchResultsSet,
+		__loadingSet,
+	}) => () =>
+		searchAmz({
+			searchIndex,
+			keywords: searchFor,
+			responseGroup: "Images,Large",
+		})
+			.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
+			.then(
+				R.map(
+					({
+						LargeImage,
+						DetailPageURL,
+						ItemAttributes,
+						EditorialReviews,
+					}) => ({
+						name: R.path([0, "Title", 0,])(ItemAttributes),
+						url: DetailPageURL[0],
+						image: R.path([0, "URL", 0,])(LargeImage),
+						description: R.path([
+							0,
+							"EditorialReview",
+							0,
+							"Content",
+							0,
+						])(EditorialReviews),
+					}),
+				),
+			)
+			.then(__searchResultsSet)
+			.then(() => __loadingSet(false)),
+
 	onSearchForChange: ({
 		__searchResultsSet,
 		__searchForSet,
 		queryTimeout,
-		searchIndex,
 		__queryTimeoutSet,
-		searchAmz,
+		performSearch,
+		__loadingSet,
 	}) => e => {
 		const searchFor = e.target.value;
 
@@ -67,38 +120,8 @@ const handlers = withHandlers({
 			clearTimeout(queryTimeout);
 		}
 
-		__queryTimeoutSet(
-			setTimeout(() => {
-				searchAmz({
-					searchIndex,
-					keywords: searchFor,
-					responseGroup: "Images,Large",
-				})
-					.then(R.path(["ItemSearchResponse", "Items", 0, "Item",]))
-					.then(
-						R.map(
-							({
-								LargeImage,
-								DetailPageURL,
-								ItemAttributes,
-								EditorialReviews,
-							}) => ({
-								name: R.path([0, "Title", 0,])(ItemAttributes),
-								url: DetailPageURL[0],
-								image: R.path([0, "URL", 0,])(LargeImage),
-								description: R.path([
-									0,
-									"EditorialReview",
-									0,
-									"Content",
-									0,
-								])(EditorialReviews),
-							}),
-						),
-					)
-					.then(__searchResultsSet);
-			}, 300),
-		);
+		__queryTimeoutSet(setTimeout(performSearch, 300));
+		__loadingSet(true);
 	},
 });
 
@@ -107,5 +130,6 @@ export default compose(
 	withSearchIndexState,
 	withSearchResults,
 	withQueryTimeoutState,
+	withLoadingState,
 	handlers,
 );
