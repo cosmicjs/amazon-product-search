@@ -1,5 +1,5 @@
-# Codogo CosmicJS Extension example
-## Search Amazon's product catalouge and add products with afiliate links to your cosmic bucket
+# Amazon Product Search
+## Search Amazon's product catalouge and add products with afiliate links to your Cosmic JS Bucket
 
 Run using:
 `yarn run start` or `npm run start`
