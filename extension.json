@@ -1,7 +1,7 @@
 {
 	"title": "Amazon Product Search",
 	"font_awesome_class": "fa-shopping-basket",
-	"image_url": "http://fla.fg-a.com/shopping-cart/shopping-cart-black-3.png",
+	"image_url": "https://cosmicjs.com/uploads/f1f1bd40-5dcd-11e7-b529-51f126a4b6ee-shopping-cart.jpg",
 	"objects": [
 		{
 			"title": "Amazon Credentials",
@@ -27,6 +27,14 @@
 					"value": ""
 				}
 			]
+		}
+	],
+	"object_types": [
+		{
+			"title": "Amazon Products",
+			"slug": "amazon-items",
+			"singular": "Amazon Product",
+			"metafields":[{"key":"image_url","type":"text","value":"","title":"image_url","parent":false,"children":null},{"key":"affiliate_link","type":"text","value":"","title":"affiliate_link","parent":false,"children":null}]
 		}
 	]
 }
