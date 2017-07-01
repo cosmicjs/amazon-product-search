@@ -1,5 +1,6 @@
 # Amazon Product Search
 ![Amazon Product Search](https://cosmicjs.com/uploads/27cc9730-5e7a-11e7-9efa-1959153891b6-amazon-product-search.jpg)
+
 Search Amazon's product catalouge and add products with afiliate links to your Cosmic JS Bucket
 ### Getting Started
 ```
