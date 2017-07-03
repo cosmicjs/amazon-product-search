@@ -14,7 +14,7 @@ http://localhost:3000?bucket_slug=your-bucket-slug&read_key=bucket-read-key&writ
 ### Install in your Bucket
 To add this Extension to your Bucket simply install it from Your Bucket > Extensions > Browse Extensions and find this Extension.
 
-Or you can upload the build file to your Bucket:
+Or you can upload the build as a zip file to your Bucket:
 1. Run the build command
 ```
 yarn build
