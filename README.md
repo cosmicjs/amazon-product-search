@@ -12,6 +12,12 @@ yarn start
 http://localhost:3000?bucket_slug=your-bucket-slug&read_key=bucket-read-key&write_key=bucket-write-key.
 
 ### Install in your Bucket
-To add this Extension to your Bucket simply install it from Your Bucket > Extensions > Browse Extensions
+To add this Extension to your Bucket simply install it from Your Bucket > Extensions > Browse Extensions and find this Extension.  Or you can upload the build file to your Bucket.
+1. Run the build command
+```
+yarn build
+```
+2. Go to Your Bucket > Extensions > Upload Extension
+3. Drop the zip file here
 ## Documentation
 To build your own Cosmic JS Extension, [read the Cosmic JS Extensions documentation](https://cosmicjs.com/docs/extensions).
