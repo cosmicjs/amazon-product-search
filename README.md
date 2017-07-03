@@ -17,7 +17,6 @@ To add this Extension to your Bucket simply install it from Your Bucket > Extens
 ```
 yarn build
 ```
-2. Go to Your Bucket > Extensions > Upload Extension
-3. Drop the zip file here
+2. Go to Your Bucket > Extensions > Upload Extension and drop the zip file
 ## Documentation
 To build your own Cosmic JS Extension, [read the Cosmic JS Extensions documentation](https://cosmicjs.com/docs/extensions).
