@@ -1,5 +1,5 @@
 # Amazon Product Search
-<img width="60%" src="https://cosmicjs.com/uploads/479bbfa0-5e7a-11e7-9efa-1959153891b6-amazon-product-search.jpg" />
+<img width="60%" src="https://cosmicjs.imgix.net/26b41d70-5f9a-11e7-b120-9f6bc26aeb8f-amazon-product-search.jpg" />
 
 Search Amazon's product catalouge and add products with afiliate links to your [Cosmic JS](https://cosmicjs.com) Bucket.  [Read the blog article](https://cosmicjs.com/blog/building-and-publishing-a-cosmic-js-extension-using-bitbucket-pipelines) to learn how it was built.
 ### Getting Started
